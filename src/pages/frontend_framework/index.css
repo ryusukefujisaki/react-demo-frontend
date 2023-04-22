@@ -23,12 +23,19 @@ a:hover {
   color: #535bf2;
 }
 
-body {
+/* custom */
+/* body { */
+.body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+/* custom */
+.App {
+  margin: 0 auto;
 }
 
 h1 {
