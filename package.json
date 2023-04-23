@@ -14,6 +14,7 @@
     "react-router-dom": "^6.10.0"
   },
   "devDependencies": {
+    "@headlessui/react": "^1.7.14",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
