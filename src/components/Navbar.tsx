@@ -11,7 +11,7 @@ export default function Navbar() {
   interface Item { name: string, to: string, current: boolean }
   const [navigation, setNavigation]: Array<any> = useState([
     { name: 'CRUD', to: '/crud', current: false },
-    { name: 'Frontend Framework', to: '/frontend_framework', current: true }
+    { name: 'Frontend Framework', to: '/frontend_framework', current: false }
   ])
   const handleClickMenu = (clicked: Item) => {
     setNavigation((navigation: Array<Item>) => {
