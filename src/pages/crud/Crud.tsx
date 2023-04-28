@@ -7,22 +7,25 @@ function Crud(): JSX.Element {
   const [updated, setUpdated] = useState(0)
   useEffect(() => {
     axios.get('/cruds').then(response => {
-      setCruds(cruds => cruds = response.data)
+      setCruds((cruds: Array<any>) => cruds = response.data)
     })
   }, [updated])
   const [createInput, setInputCreate]: Array<any> = useState()
-  function handleChangeCreate(event) {
+  function handleChangeCreate(event: any) {
     setInputCreate((createInput: string | null) =>
       createInput = event.target.value
     )
   }
-  function handleClickCreate(event) {
+  function handleClickCreate(event: any) {
     event.preventDefault()
     axios.post('/cruds', { value: createInput }).then(() => {
       setInputCreate((createInput: string | null) => {
         createInput = null
       })
-      document.getElementById('create-input').value = null
+      const createInputEle = document.getElementById('create-input') as HTMLInputElement | null
+      if (createInputEle != null) {
+        createInputEle.value = ''
+      }
       setUpdated((updated: number) => ++updated)
     })
   }
@@ -63,7 +66,7 @@ function Crud(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {cruds.map(crud =>
+          {cruds.map((crud: any) =>
             <tr key={crud.id}>
               {
                 [crud.id, crud.value, formatDate(crud.created_at), formatDate(crud.updated_at)].map((attribute, index) =>

@@ -45,7 +45,7 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    { navigation.map((item) => (
+                    { navigation.map((item: Item) => (
                       <Link
                         key={ item.name }
                         to={ item.to }
@@ -69,7 +69,7 @@ export default function Navbar() {
           </div>
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              { navigation.map((item) => (
+              { navigation.map((item: Item) => (
                 <Disclosure.Button key={ item.name }>
                   <Link
                     to={ item.to }
