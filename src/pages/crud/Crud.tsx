@@ -54,7 +54,7 @@ function Crud(): JSX.Element {
           onClick={handleCreateClick}
         />
       </form>
-      <table className="table-fixed px-16 border-separate w-full bg-white dark:bg-slate-800">
+      <table className="table-fixed px-16 mb-3 border-separate w-full bg-white dark:bg-slate-800">
         <thead>
           <tr className="text-3xl text-left ml-16 py-3">
             {
@@ -87,7 +87,7 @@ function Crud(): JSX.Element {
               {
                 [crud.id, crud.value, formatDate(crud.created_at), formatDate(crud.updated_at)].map((attribute, index) =>
                   <td
-                    className="border border-slate-300 p-3 text-slate-500"
+                    className="border border-slate-300 p-3 text-slate-500 break-all"
                     key={`${crud.id}-${index}`}
                   >
                     {attribute}
