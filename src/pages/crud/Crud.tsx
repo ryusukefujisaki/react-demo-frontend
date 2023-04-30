@@ -94,10 +94,12 @@ function Crud(): JSX.Element {
               {
                 [crud.id, crud.value, formatDate(crud.created_at), formatDate(crud.updated_at)].map((attribute, index) =>
                   <td
-                    className="border border-slate-300 p-3 text-slate-500 break-all"
+                    className="border border-slate-300 text-slate-500"
                     key={`${crud.id}-${index}`}
                   >
-                    {attribute}
+                    <div className="p-3 overflow-x-scroll whitespace-nowrap">
+                      {attribute}
+                    </div>
                   </td>
                 )
               }
