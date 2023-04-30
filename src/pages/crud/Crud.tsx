@@ -4,30 +4,34 @@ import { formatDate } from '@/utilities/displayHelper'
 
 function Crud(): JSX.Element {
   const [cruds, setCruds]: Array<any> = useState([])
-  const [updated, setUpdated] = useState(0)
+  const [updated, setUpdated]: Array<any> = useState(0)
   useEffect(() => {
-    axios.get('/cruds').then(response => {
-      setCruds((cruds: Array<any>) => cruds = response.data)
-    })
-  }, [updated])
-  const [createInput, setInputCreate]: Array<any> = useState()
-  function handleCreateChange(event: any): void {
-    setInputCreate((createInput: string | null) =>
-      createInput = event.target.value
+    axios.get('/cruds').then(response =>
+      setCruds(() => response.data)
     )
-  }
+  }, [updated])
+
   function handleCreateClick(event: any): void {
     event.preventDefault()
-    axios.post('/cruds', { value: createInput }).then(() => {
-      setInputCreate((createInput: string | null) => {
-        createInput = null
-      })
-      const createInputEle = document.getElementById('create-input') as HTMLInputElement | null
-      if (createInputEle != null) {
+    const createInputEle = document.getElementById('create-input') as HTMLInputElement | null
+    if (createInputEle != null) {
+      const requestBody = { value: createInputEle.value }
+      axios.post('/cruds', requestBody).then(() => {
         createInputEle.value = ''
-      }
-      setUpdated((updated: number) => ++updated)
-    })
+        setUpdated((updated: number) => ++updated)
+      })
+    }
+  }
+  function handleUpdateClick(event: any): void {
+    const id: string = event.target.getAttribute('data-id')
+    const updateInputEle = document.getElementById(`update-input-${id}`) as HTMLInputElement | null
+    if (updateInputEle != null) {
+      const requestBody = { value: updateInputEle.value, updated_at: Date.now() }
+      axios.patch(`/cruds/${id}`, requestBody).then(() => {
+        updateInputEle.value = ''
+        setUpdated((updated: number) => ++updated)
+      })
+    }
   }
   function handleDeleteClick(event: any): void {
     const id: string = event.target.getAttribute('data-id')
@@ -45,7 +49,6 @@ function Crud(): JSX.Element {
           className="flex ml-16 w-1/5 border rounded p-3 focus:outline-none"
           type="text"
           placeholder="value"
-          onChange={handleCreateChange}
         />
         <input
           className="bg-green-400 hover:bg-green-500 w-1/12 text-white ml-1 p-3 rounded focus:outline-none"
@@ -54,7 +57,7 @@ function Crud(): JSX.Element {
           onClick={handleCreateClick}
         />
       </form>
-      <table className="table-fixed px-16 border-separate w-full bg-white dark:bg-slate-800">
+      <table className="table-fixed px-16 mb-3 border-separate w-full bg-white dark:bg-slate-800">
         <thead>
           <tr className="text-3xl text-left ml-16 py-3">
             {
@@ -64,7 +67,9 @@ function Crud(): JSX.Element {
                 </td>
               )
             }
-            <td className="px-0 py-3" style={{width: '10%'}}>D</td>
+            <td className="px-0 py-3 w-2/12">U</td>
+            <td className="px-0 py-3 w-1/12"></td>
+            <td className="px-0 py-3 w-1/12">D</td>
           </tr>
           <tr>
             {
@@ -79,6 +84,8 @@ function Crud(): JSX.Element {
               )
             }
             <th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -87,13 +94,31 @@ function Crud(): JSX.Element {
               {
                 [crud.id, crud.value, formatDate(crud.created_at), formatDate(crud.updated_at)].map((attribute, index) =>
                   <td
-                    className="border border-slate-300 p-3 text-slate-500"
+                    className="border border-slate-300 text-slate-500"
                     key={`${crud.id}-${index}`}
                   >
-                    {attribute}
+                    <div className="p-3 overflow-x-scroll whitespace-nowrap">
+                      {attribute}
+                    </div>
                   </td>
                 )
               }
+              <td>
+                <input
+                  id={`update-input-${crud.id}`}
+                  className="flex w-full border rounded p-3 focus:outline-none"
+                  type="text"
+                />
+              </td>
+              <td>
+                <input
+                  className="flex w-full bg-blue-400 hover:bg-blue-500 text-white p-3 rounded focus:outline-none"
+                  data-id={crud.id}
+                  type="button"
+                  value="Update"
+                  onClick={handleUpdateClick}
+                />
+              </td>
               <td>
                 <input
                   className="flex w-full bg-red-400 hover:bg-red-500 text-white p-3 rounded focus:outline-none"
