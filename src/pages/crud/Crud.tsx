@@ -3,14 +3,25 @@ import axios from '@/utilities/axios'
 import { formatDate } from '@/utilities/displayHelper'
 
 function Crud(): JSX.Element {
+  interface Crud {
+    id: string,
+    value: string | null,
+    created_at: string,
+    updated_at: string
+  }
   const [cruds, setCruds]: Array<any> = useState([])
+  const [updateInputs, setUpdateInputs]: Array<any> = useState([])
   const [updated, setUpdated]: Array<any> = useState(0)
   useEffect(() => {
-    axios.get('/cruds').then(response =>
+    axios.get('/cruds').then((response: any) => {
       setCruds(() => response.data)
-    )
+      setUpdateInputs(() => response.data.map((one: Crud) => ({ ...one })))
+    })
   }, [updated])
 
+  function findUpdateInputById(id: string): Crud {
+    return updateInputs.find((updateInput: Crud) => updateInput.id === id)
+  }
   function handleCreateClick(event: any): void {
     event.preventDefault()
     const createInputEle = document.getElementById('create-input') as HTMLInputElement | null
@@ -21,6 +32,17 @@ function Crud(): JSX.Element {
         setUpdated((updated: number) => ++updated)
       })
     }
+  }
+  function handleUpdateChange(event: any): void {
+    const target = findUpdateInputById(event.target.getAttribute('data-id'))
+    setUpdateInputs((updateInputs: Array<Crud>) => (
+      updateInputs.map((updateInput: Crud) => {
+        if (updateInput.id === target.id) {
+          updateInput.value = event.target.value
+        }
+        return updateInput
+      })
+    ))
   }
   function handleUpdateClick(event: any): void {
     const id: string = event.target.getAttribute('data-id')
@@ -107,7 +129,10 @@ function Crud(): JSX.Element {
                 <input
                   id={`update-input-${crud.id}`}
                   className="flex w-full border rounded p-3 focus:outline-none"
+                  data-id={crud.id}
                   type="text"
+                  value={findUpdateInputById(crud.id).value || ''}
+                  onChange={handleUpdateChange}
                 />
               </td>
               <td>
