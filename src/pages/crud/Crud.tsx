@@ -128,7 +128,7 @@ function Crud(): JSX.Element {
               <td>
                 <input
                   id={`update-input-${crud.id}`}
-                  className="flex w-full border rounded p-3 focus:outline-none"
+                  className="flex w-full border rounded p-3 focus:outline-none text-slate-500"
                   data-id={crud.id}
                   type="text"
                   value={findUpdateInputById(crud.id).value || ''}
