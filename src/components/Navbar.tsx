@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { useAppDispatch } from '@/hooks'
+import { increment } from '@/features/pageMovingCounter/pageMovingCounterSlice'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -8,6 +10,8 @@ function classNames(...classes: Array<string>): string {
 }
 
 export default function Navbar() {
+  const location = useLocation()
+  const dispatch = useAppDispatch()
   interface Item { name: string, to: string, current: boolean }
   const [navigation, setNavigation]: Array<any> = useState([
     { name: 'Top', to: '/top', current: false },
@@ -22,6 +26,9 @@ export default function Navbar() {
         return item
       })
     })
+    if (clicked.to !== location.pathname) {
+      dispatch(increment())
+    }
   }
 
   return (
