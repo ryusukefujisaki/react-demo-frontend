@@ -1,5 +1,4 @@
 import { useAppSelector } from '@/hooks'
-import reduxLogo from '/redux.svg'
 
 function PageMovingCounter(): JSX.Element {
   const pageMovingCount = useAppSelector(state => state.pageMovingCounter.value)
@@ -9,7 +8,7 @@ function PageMovingCounter(): JSX.Element {
       <thead>
         <tr>
           <th className="border border-slate-300 p-3" colSpan={2}>
-            <img src={reduxLogo} className="logo redux h-4 p-0" alt="Redux logo" />Redux
+            <img src="/redux.svg" className="logo redux h-4 p-0" alt="Redux logo" />Redux
           </th>
         </tr>
       </thead>
