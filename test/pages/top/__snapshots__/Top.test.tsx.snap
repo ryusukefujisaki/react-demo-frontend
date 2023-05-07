@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test 1`] = `
+<div
+  className="min-h-screen my-0 w-max mx-auto"
+>
+  <div
+    className="text-3xl py-12"
+  >
+    Top
+  </div>
+  <table
+    className="border-collapse py-3"
+  >
+    <thead>
+      <tr>
+        <th
+          className="border border-slate-300 p-3"
+          colSpan={2}
+        >
+          <img
+            alt="Redux logo"
+            className="logo redux h-4 p-0"
+            src="/redux.svg"
+          />
+          Redux
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th
+          className="border border-slate-300 p-3 bg-slate-100"
+        >
+          Page Moving Count
+        </th>
+        <td
+          className="border border-slate-300 p-3"
+        >
+          1
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
